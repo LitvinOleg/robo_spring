@@ -1,13 +1,26 @@
 package spring.model;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import spring.interfaces.Hand;
 import spring.interfaces.Head;
 import spring.interfaces.Leg;
 
+@Component(value = "t1000")
 public class ModelT1000 extends BaseModel {
     private String name;
     private int id;
     private boolean soundEnabled;
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public ModelT1000 model1() {
+        return new ModelT1000("Stepan", 43, false);
+    }
 
     public ModelT1000() {
     }
@@ -42,34 +55,36 @@ public class ModelT1000 extends BaseModel {
         System.out.println("Dance!!!");
     }
 
-    public String getName() {
-        return name;
-    }
+    //@Required // во время сборки bean'a нужно обязательно собирать(внедрять) эти объекты
     public void setName(String name) {
         this.name = name;
     }
-
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
+
+    //@Required
     public void setId(int id) {
         this.id = id;
     }
-
-    public boolean isSoundEnabled() {
-        return soundEnabled;
+    public int getId() {
+        return id;
     }
+
+    //@Required
     public void setSoundEnabled(boolean soundEnabled) {
         this.soundEnabled = soundEnabled;
+    }
+    public boolean isSoundEnabled() {
+        return soundEnabled;
     }
 
     @Override
     public String toString() {
-        return "ModelT1000{" +
-                "\nname='" + name + '\'' +
-                ", \nid=" + id +
-                ", \nsoundEnabled=" + soundEnabled +
-                '}';
+        return "ModelT1000: " +
+                " name='" + name + '\'' +
+                ", id=" + id +
+                ", soundEnabled=" + soundEnabled;
     }
 
     public void initObject() {

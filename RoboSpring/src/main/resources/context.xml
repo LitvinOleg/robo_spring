@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 
        default-lazy-init="false"
        default-init-method="initObject"
@@ -22,22 +22,32 @@
         7. abstract - указывает на абстрактность бина
         8. lookup-method - вызывает метод у класса для создания объекта(Method Injection). Происходит при помощи абстрактного класса и его абстрактного метода
         9. replaced-method - позволяет заменить реализацию какого-то(любого) метода в каком-либо бине
+        10. autowire - позволяет автоматически связывать bean'ы(byType - поиск по типу поля, byName - поиск по имени поля)
+        11. autowire-candidate - позоляет bean'ам не учавствоать в автоматическом связывании
     -->
+    <context:annotation-config/> <!--Говорит Spring контейнеру об использовании аннотаций-->
+    <context:component-scan base-package="spring"/> <!---->
 
+    <!--import resource="RobotContext.xml"/>
 
-    <import resource="RobotContext.xml"/>
-
-        <!--RobotBuilder-->
+        -RobotBuilder-
     <bean id="t1000builder" class="spring.model.BuilderT1000">
         <lookup-method name="createRobot" bean="sonyT1000"/>
     </bean>
 
-    <bean id="t1000Pool" class="spring.model.ModelT1000Pool">
-        <constructor-arg name="robots"> <!--Куда записываем, можно также м через property-->
-            <map>
-                <entry key="1" value-ref="sonyT1000"/>
-                <entry key="2" value-ref="toshibaT1000"/>
-            </map>
+    <bean id="t1000Pool" class="spring.model.T1000Pool">
+        <constructor-arg name="robotCollection"> <!-ds-Куда записываем, можно также м через property-f->
+            <list>
+                <ref bean="toshibaT1000"/>
+                <ref bean="sonyT1000"/>
+                <bean class="spring.model.ModelT1000" parent="baseModelSony" autowire="byName">
+                    <property name="name" value="Stpfds"/>
+                    <property name="id" value="43"/>
+                    <property name="soundEnabled" value="true"/>
+                    <property name="hand" ref="sonyHand"/>
+                    <property name="leg" ref="toshibaLeg"/>
+                </bean>
+            </list>
         </constructor-arg>
-    </bean>
+    </bean>-->
 </beans>

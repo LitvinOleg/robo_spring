@@ -3,9 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <import resource="RoportFigureParts.xml"/>
+    <!--<import resource="RobotFigureParts.xml"/>
 
-    <bean id="baseModelSony" class="spring.model.BaseModel" abstract="true">
+    <bean id="baseModelSony" class="spring.model.BaseModel" abstract="true" depends-on="sonyHead sonyHand sonyLeg">
         <constructor-arg ref="sonyHead" index="0"/>
         <constructor-arg ref="sonyHand" index="1"/>
         <constructor-arg ref="sonyLeg" index="2"/>
@@ -13,33 +13,27 @@
 
 
     <bean id="actionReplacer" class="spring.model.ActionReplacer"/>
-    <!--Sony t1000-->
+    <!-Sony t1000-
     <bean id="sonyT1000" class="spring.model.ModelT1000" init-method="initObject" scope="prototype"
-          destroy-method="destroyObject" parent="baseModelSony">
+          destroy-method="destroyObject" depends-on="sonyHead sonyHand sonyLeg">
 
-        <constructor-arg name="name" index="3" value="Sonya"/>
-        <constructor-arg name="id" index="4" value="3"/>
-        <constructor-arg name="soundEnabled" index="5" value="true"/>
-
-        <replaced-method name="action" replacer="actionReplacer"/>
-        <!--СЕТТЕРЫ
+        <!-<replaced-method name="action" replacer="actionReplacer"/> зпменяет метод-->
+        <!--СЕТТЕРЫ-
         <property name="head" ref="sonyHead"/>
         <property name="hand" ref="sonyHand"/>
-        <property name="leg" ref="sonyLeg"/>-->
+        <property name="leg" ref="sonyLeg"/>
+        <property name="name" value="Zyzz"/>
+        <property name="id" value="43"/>
+        <property name="soundEnabled" value="true"/>
 
     </bean>
 
-    <!--Toshiba t1000-->
+    <!-Toshiba t1000-
     <bean id="toshibaT1000" class="spring.model.ModelT1000" scope="prototype"
-          init-method="initObject" destroy-method="destroyObject"> <!--"p" - Даёт возможность писать в атрибутах "bean" сеттеры-->
+          init-method="initObject" destroy-method="destroyObject" autowire="byType"> <!-"p" - Даёт возможность писать в атрибутах "bean" сеттеры-fds-
 
-        <constructor-arg ref="toshibaHead"/>
-        <constructor-arg ref="toshibaHand"/>
-        <constructor-arg ref="toshibaLeg"/>
-
-        <property name="name" value="TerminatorT1000Toshiba"/>
-        <property name="id" value="3"/>
+        <property name="name" value="Shura"/>
+        <property name="id" value="234"/>
         <property name="soundEnabled" value="false"/>
-
-    </bean>
+    </bean>-->
 </beans>
